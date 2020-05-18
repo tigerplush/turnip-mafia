@@ -78,6 +78,7 @@ router.post('/', function(req, res, next)
 
     const turnip = {};
     turnip.userId = req.user.userId;
+    turnip.userName = req.user.userName;
     turnip.week = req.session.week;
     turnip.buyingPrice = req.body.buyingPrice;
     turnip.sellingPrices = req.body.sellingPrices;

@@ -54,7 +54,7 @@ router.get('/', function(req, res, next)
         let dataSets = turnips.map(turnip =>
         {
             turnip.sellingPrices.unshift(turnip.buyingPrice);
-            return DataSet.get(turnip.sellingPrices, turnip.name);
+            return DataSet.get(turnip.sellingPrices, turnip.userName);
         });
         res.render('overview.hbs',
         {
