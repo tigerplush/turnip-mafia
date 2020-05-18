@@ -15,7 +15,6 @@ router.get('/register', function(req, res, next)
         userDb.findOne({userId: req.user.userId})
         .then(user =>
             {
-                console.log(user);
                 if(user && user.userName)
                 {
                     res.redirect('/');
@@ -55,7 +54,6 @@ router.post('/register', function(req, res, next)
 
 router.post('/register-cancel', function(req, res, next)
 {
-    console.log(req.user);
     userDb.remove({userId: req.user.userId})
     .catch(err => console.log(err));
     req.session.destroy();
