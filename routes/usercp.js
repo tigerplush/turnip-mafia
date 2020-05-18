@@ -24,7 +24,7 @@ router.get('/', function(req, res, next)
             req.session.week = thisWeek;
         }
 
-        let user = {};
+        let user;
         turnipPrices.find(
             {
                 userId: req.user.userId,
@@ -40,12 +40,31 @@ router.get('/', function(req, res, next)
         .catch(err => console.log(err))
         .finally(()=>
         {
+            let week = [
+                {weekday: "Monday"},
+                {weekday: "Tuesday"},
+                {weekday: "Wednesday"},
+                {weekday: "Thursday"},
+                {weekday: "Friday"},
+                {weekday: "Saturday"}
+            ];
+
+            if(user)
+            {
+                for(let i = 0; i < week.length; i++)
+                {
+                    week[i].amPrice = user.sellingPrices[i * 2];
+                    week[i].pmPrice = user.sellingPrices[(i * 2) + 1];
+                }
+            }
+
             res.render('usercp.hbs',
             {
                 usercp: true,
                 defaultWeek: req.session.week,
                 thisWeek: thisWeek,
                 user: user,
+                week: week,
             });
         });
     }
@@ -61,18 +80,7 @@ router.post('/', function(req, res, next)
     turnip.userId = req.user.userId;
     turnip.week = req.session.week;
     turnip.buyingPrice = req.body.buyingPrice;
-    turnip.monAM = req.body.monAM;
-    turnip.monPM = req.body.monPM;
-    turnip.tueAM = req.body.tueAM;
-    turnip.tuePM = req.body.tuePM;
-    turnip.wedAM = req.body.wedAM;
-    turnip.wedPM = req.body.wedPM;
-    turnip.thuAM = req.body.thuAM;
-    turnip.thuPM = req.body.thuPM;
-    turnip.friAM = req.body.friAM;
-    turnip.friPM = req.body.friPM;
-    turnip.satAM = req.body.satAM;
-    turnip.satPM = req.body.satPM;
+    turnip.sellingPrices = req.body.sellingPrices;
 
     turnipPrices.addOrUpdate(turnipToUpdate, turnip)
     .catch(err => console.log(err))

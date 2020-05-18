@@ -55,72 +55,9 @@
             </div>
         </div>
         <div class="form-flex-wrap">
-            <div class="form-row">
-                <h6>Monday</h6>
-                <div class="input-group">
-                    <label for="monAMSellingPrice">AM</label>
-                    <input type="number" id="monAMSellingPrice" placeholder="..." name="monAM" {{#if user.monAM}}value={{user.monAM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-                <div class="input-group">
-                    <label for="monPMSellingPrice">PM</label>
-                    <input type="number" id="monPMSellingPrice" placeholder="..." name="monPM" {{#if user.monPM}}value={{user.monPM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-            </div>
-            <div class="form-row">
-                <h6>Tuesday</h6>
-                <div class="input-group">
-                    <label for="tueAMSellingPrice">AM</label>
-                    <input type="number" id="tueAMSellingPrice" placeholder="..." name="tueAM" {{#if user.tueAM}}value={{user.tueAM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-                <div class="input-group">
-                    <label for="tuePMSellingPrice">PM</label>
-                    <input type="number" id="tuePMSellingPrice" placeholder="..." name="tuePM" {{#if user.tuePM}}value={{user.tuePM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-            </div>
-            <div class="form-row">
-                <h6>Wednesday</h6>
-                <div class="input-group">
-                    <label for="wedAMSellingPrice">AM</label>
-                    <input type="number" id="wedAMSellingPrice" placeholder="..." name="wedAM" {{#if user.wedAM}}value={{user.wedAM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-                <div class="input-group">
-                    <label for="wedPMSellingPrice">PM</label>
-                    <input type="number" id="wedPMSellingPrice" placeholder="..." name="wedPM" {{#if user.wedPM}}value={{user.wedPM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-            </div>
-            <div class="form-row">
-                <h6>Tuesday</h6>
-                <div class="input-group">
-                    <label for="thuAMSellingPrice">AM</label>
-                    <input type="number" id="thuAMSellingPrice" placeholder="..." name="thuAM" {{#if user.thuAM}}value={{user.thuAM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-                <div class="input-group">
-                    <label for="thuPMSellingPrice">PM</label>
-                    <input type="number" id="thuPMSellingPrice" placeholder="..." name="thuPM" {{#if user.thuPM}}value={{user.thuPM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-            </div>
-            <div class="form-row">
-                <h6>Friday</h6>
-                <div class="input-group">
-                    <label for="friAMSellingPrice">AM</label>
-                    <input type="number" id="friAMSellingPrice" placeholder="..." name="friAM" {{#if user.friAM}}value={{user.friAM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-                <div class="input-group">
-                    <label for="friPMSellingPrice">PM</label>
-                    <input type="number" id="friPMSellingPrice" placeholder="..." name="friPM" {{#if user.friPM}}value={{user.friPM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-            </div>
-            <div class="form-row">
-                <h6>Saturday</h6>
-                <div class="input-group">
-                    <label for="satAMSellingPrice">AM</label>
-                    <input type="number" id="satAMSellingPrice" placeholder="..." name="satAM" {{#if user.satAM}}value={{user.satAM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-                <div class="input-group">
-                    <label for="satPMSellingPrice">PM</label>
-                    <input type="number" id="satPMSellingPrice" placeholder="..." name="satPM" {{#if user.satPM}}value={{user.satPM}}{{/if}} onchange="this.form.submit()"/>
-                </div>
-            </div>
+            {{#each week}}
+            {{> data-entry}}
+            {{/each}}
         </div>
     </form>
 </div>
