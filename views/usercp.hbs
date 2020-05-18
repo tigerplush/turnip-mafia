@@ -40,16 +40,16 @@
     </select>
 </form>
 
-<form id="weekSelectorForm" method="GET" action="/usercp">
-    <input type="week" id="weekSelector" name="week" value={{defaultWeek}} onchange="this.form.submit()"/>
-    <input type="button" onclick="resetDate()"value="Today"/>
-</form>
-
 <div class="usercp-center">
+    <form id="weekSelectorForm" method="GET" action="/usercp">
+        <input type="week" id="weekSelector" name="week" value={{defaultWeek}} onchange="this.form.submit()"/>
+        <input type="button" onclick="resetDate()"value="Today"/>
+    </form>
+
     <form id="priceInputForm" method="POST" action="/usercp">
         <div class="form-row">
             <h6>Sunday</h6>
-            <div class="input-group">
+            <div class="data-entry-group">
                 <label for="monAMSellingPrice">What was the price of turnips this week on your island?</label>
                 <input type="number" id="monAMSellingPrice" placeholder="..." name="buyingPrice" {{#if userInfo.buyingPrice}}value={{userInfo.buyingPrice}}{{/if}} onchange="this.form.submit()"/>
             </div>
