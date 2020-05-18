@@ -5,69 +5,23 @@ const moment = require('moment');
 
 const Chart = require('chart.js');
 
-const overviewChartOptions ={
-    label: 'Unsure',
-    fill: false,
-    data: [106, 91],
-    borderColor: [
-        'rgba(255, 99, 132, 1)',
-    ],
-    borderWidth: 2
-};
+class DataSet
+{
+    static get(prices)
+    {
+        const overviewChartOptions =
+        {
+            fill: false,
+            data: prices,
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 2
+        };
 
-const dataSets =
-[
-    {
-        label: 'Unsure',
-        fill: false,
-        data: [12, 19, 3, 5, 2, 3],
-        borderColor:
-        [
-            'rgba(255, 99, 132, 1)',
-        ],
-        borderWidth: 2
-    },
-    {
-        label: 'Small Spike',
-        fill: false,
-        data: [105, 91, 3, 5, 2, 3],
-        borderColor:
-        [
-            'rgba(255, 155, 132, 1)',
-        ],
-        borderWidth: 2
-    },
-    {
-        label: 'Big Spike',
-        fill: false,
-        data: [105, 91, 3, 5, 2, 3],
-        borderColor:
-        [
-            'rgba(255, 155, 132, 1)',
-        ],
-        borderWidth: 2
-    },
-    {
-        label: 'Decreasing',
-        fill: false,
-        data: [105, 91, 3, 5, 2, 3],
-        borderColor:
-        [
-            'rgba(255, 155, 132, 1)',
-        ],
-        borderWidth: 2
-    },
-    {
-        label: 'Random',
-        fill: false,
-        data: [105, 91, 3, 5, 2, 3],
-        borderColor:
-        [
-            'rgba(255, 155, 132, 1)',
-        ],
-        borderWidth: 2
+        return overviewChartOptions;
     }
-];
+}
 
 const turnipPrices = require('../Database/turnip-prices');
 const userDb = require('../Database/user');
@@ -93,15 +47,23 @@ router.get('/', function(req, res, next)
         {
             //console.log(users);
         })
-    .catch(err => console.log(err));
-
-    res.render('overview.hbs',
+    .catch(err => console.log(err))
+    .finally(() =>
+    {
+        let dataSets = turnips.map(turnip =>
+        {
+            turnip.sellingPrices.unshift(turnip.buyingPrice);
+            return DataSet.get(turnip.sellingPrices);
+        });
+        console.log(dataSets);
+        res.render('overview.hbs',
         {
             overview: true,
             defaultWeek: week,
             thisWeek: thisWeek,
             datasets: dataSets,
         });
+    });
 });
 
 module.exports = router;
