@@ -51,7 +51,7 @@
             <h6>Sunday</h6>
             <div class="input-group">
                 <label for="monAMSellingPrice">What was the price of turnips this week on your island?</label>
-                <input type="number" id="monAMSellingPrice" placeholder="..." name="buyingPrice" {{#if user.buyingPrice}}value={{user.buyingPrice}}{{/if}} onchange="this.form.submit()"/>
+                <input type="number" id="monAMSellingPrice" placeholder="..." name="buyingPrice" {{#if userInfo.buyingPrice}}value={{userInfo.buyingPrice}}{{/if}} onchange="this.form.submit()"/>
             </div>
         </div>
         <div class="form-flex-wrap">

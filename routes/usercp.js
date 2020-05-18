@@ -63,7 +63,8 @@ router.get('/', function(req, res, next)
                 usercp: true,
                 defaultWeek: req.session.week,
                 thisWeek: thisWeek,
-                user: user,
+                user: req.user,
+                userInfo: user,
                 week: week,
             });
         });
