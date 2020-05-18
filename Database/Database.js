@@ -51,6 +51,26 @@ class Database
         });
     }
 
+    saveUpdate(doc, updateDoc)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            this.database.update(
+                doc,
+                {$set: updateDoc},
+                {},
+                function(err, numberOfUpdated)
+                {
+                    if(err)
+                    {
+                        reject(err);
+                    }
+                    resolve(numberOfUpdated);
+                }
+            );
+        });
+    }
+
     addOrUpdate(doc, updateDoc)
     {
         return new Promise((resolve, reject) =>

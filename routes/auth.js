@@ -12,9 +12,10 @@ router.get('/register', function(req, res, next)
     }
     else
     {
-        userDb.findOne({userId: req.user.sub})
+        userDb.findOne({userId: req.user.userId})
         .then(user =>
             {
+                console.log(user);
                 if(user && user.userName)
                 {
                     res.redirect('/');
@@ -31,7 +32,25 @@ router.get('/register', function(req, res, next)
 
 router.post('/register', function(req, res, next)
 {
-    res.redirect('/');
+    if(!req.body.username)
+    {
+        res.redirect('/auth/register-cancel');
+    }
+    else
+    {
+        userDb.saveUpdate(
+            {userId: req.user.userId},
+            {userName: req.body.username})
+        .then(() =>
+        {
+            res.redirect('/');
+        })
+        .catch(err =>
+        {
+            console.log(err);
+            res.redirect('/auth/register-cancel');
+        });
+    }
 });
 
 router.post('/register-cancel', function(req, res, next)

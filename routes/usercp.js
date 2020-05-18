@@ -27,7 +27,7 @@ router.get('/', function(req, res, next)
         let user = {};
         turnipPrices.find(
             {
-                userId: req.user.sub,
+                userId: req.user.userId,
                 week: req.session.week,
             })
         .then(docs =>
@@ -54,12 +54,11 @@ router.get('/', function(req, res, next)
 router.post('/', function(req, res, next)
 {
     const turnipToUpdate = {};
-    turnipToUpdate.userId = req.user.sub;
+    turnipToUpdate.userId = req.user.userId;
     turnipToUpdate.week = req.session.week;
 
     const turnip = {};
-    turnip.userId = req.user.sub;
-    turnip.userName = req.session.userName;
+    turnip.userId = req.user.userId;
     turnip.week = req.session.week;
     turnip.buyingPrice = req.body.buyingPrice;
     turnip.monAM = req.body.monAM;
