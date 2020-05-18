@@ -5,6 +5,7 @@ const hbs = require('express-handlebars');
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const lessMiddleware = require('less-middleware');
 
 const userDb = require('./Database/user');
 
@@ -14,6 +15,11 @@ const usercpRouter = require('./routes/usercp');
 const authRouter = require('./routes/auth');
 
 const app = express();
+
+app.use(lessMiddleware('/less', {
+    dest: '/stylesheets',
+    pathRoot: __dirname + '/public'
+}));
 
 app.use(session(
     {
