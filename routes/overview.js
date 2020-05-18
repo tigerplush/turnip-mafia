@@ -7,10 +7,11 @@ const Chart = require('chart.js');
 
 class DataSet
 {
-    static get(prices)
+    static get(prices, name)
     {
         const overviewChartOptions =
         {
+            label: name,
             fill: false,
             data: prices,
             borderColor: [
@@ -53,9 +54,8 @@ router.get('/', function(req, res, next)
         let dataSets = turnips.map(turnip =>
         {
             turnip.sellingPrices.unshift(turnip.buyingPrice);
-            return DataSet.get(turnip.sellingPrices);
+            return DataSet.get(turnip.sellingPrices, turnip.name);
         });
-        console.log(dataSets);
         res.render('overview.hbs',
         {
             overview: true,

@@ -1,8 +1,5 @@
-<form id="weekForm" method="GET" action="/overview">
-    <input type="week" id="weekSelector" name="week" value={{defaultWeek}} onchange="this.form.submit()"/>
-    <input type="button" onclick="resetDate()"value="Today"/>
-</form>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
     function resetDate()
     {
@@ -12,12 +9,20 @@
     }
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<canvas id="myChart" width="1920" height="1080"></canvas>
+<div class="overview-box">
+    <div class="overview-header">
+        <form id="weekForm" method="GET" action="/overview">
+            <input type="week" id="weekSelector" name="week" value={{defaultWeek}} onchange="this.form.submit()"/>
+            <input type="button" onclick="resetDate()"value="Today"/>
+        </form>
+    </div>
+
+    <canvas class="overview-canvas-holder" id="overviewChart"></canvas>
+</div>
 
 <script>
     const dataSets = {{json datasets}};
-    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx = document.getElementById('overviewChart').getContext('2d');
     var myChart = new Chart(ctx,
     {
         type: 'line',
@@ -28,6 +33,13 @@
         },
         options:
         {
+            legend: {
+                display: false
+            },
+            global: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
             scales:
             {
                 yAxes:
