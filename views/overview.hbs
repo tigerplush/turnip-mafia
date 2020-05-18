@@ -1,0 +1,45 @@
+<form id="weekForm" method="GET" action="/overview">
+    <input type="week" id="weekSelector" name="week" value={{defaultWeek}} onchange="this.form.submit()"/>
+    <input type="button" onclick="resetDate()"value="Today"/>
+</form>
+
+<script>
+    function resetDate()
+    {
+        const element = document.getElementById("weekSelector");
+        element.value = "{{thisWeek}}";
+        element.form.submit();
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<canvas id="myChart" width="1920" height="1080"></canvas>
+
+<script>
+    const dataSets = {{json datasets}};
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx,
+    {
+        type: 'line',
+        data:
+        {
+            labels: ['Buying price', 'Mon AM', 'Mon PM', 'Tue AM', 'Tue PM', 'Wed AM', 'Wed PM', 'Thu AM', 'Thu PM', 'Fri AM', 'Fri PM', 'Sat AM', 'Sat PM'],
+            datasets: dataSets
+        },
+        options:
+        {
+            scales:
+            {
+                yAxes:
+                [
+                    {
+                        ticks:
+                        {
+                            beginAtZero: true
+                        }
+                    }
+                ]
+            }
+        }
+    });
+</script>

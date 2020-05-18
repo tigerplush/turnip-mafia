@@ -1,0 +1,13 @@
+<h1 class="header-logo">Turnip Mafia</h1>
+<ul class="header-menu">
+  <li class="header-menu-entry"><a {{#if overview}}class="header-menu-entry-active"{{/if}} href="/overview">Overview</a></li>
+  <li class="header-menu-entry"><a {{#if openIslands}}class="header-menu-entry-active"{{/if}} href="/openIslands">Open Islands</a></li>
+  {{#if user}}
+  <li class="header-menu-entry"><a {{#if usercp}}class="header-menu-entry-active"{{/if}} href="/usercp">UCP</a></li>
+  {{/if}}
+  {{#if user}}
+  <li class="login-field"><a href="/logout">Logout</a></li>
+  {{else}}
+  <li class="login-field"><a href="/auth/google">Login</a></li>
+  {{/if}}
+</ul>

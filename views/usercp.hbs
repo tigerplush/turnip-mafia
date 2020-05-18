@@ -1,0 +1,136 @@
+<form id="userInfo" method="POST" action="/usercp">
+    <select id = "timezoneList">
+        <option value="-12">UTC - 12</option>
+        <option value="-11">UTC - 11</option>
+        <option value="-10">UTC - 10</option>
+        <option value="-9:30">UTC - 9:30</option>
+        <option value="-9">UTC - 9</option>
+        <option value="-8">UTC - 8</option>
+        <option value="-7">UTC - 7</option>
+        <option value="-6">UTC - 6</option>
+        <option value="-5">UTC - 5</option>
+        <option value="-4">UTC - 4</option>
+        <option value="-3">UTC - 3</option>
+        <option value="-2:30">UTC - 2:30</option>
+        <option value="-2">UTC - 2</option>
+        <option value="-1">UTC - 1</option>
+        <option selected value="0">UTC</option>
+        <option value="1">UTC + 1</option>
+        <option value="2">UTC + 2</option>
+        <option value="3">UTC + 3</option>
+        <option value="4">UTC + 4</option>
+        <option value="4:30">UTC + 4:30</option>
+        <option value="5">UTC + 5</option>
+        <option value="5:30">UTC + 5:30</option>
+        <option value="5:45">UTC + 5:45</option>
+        <option value="6">UTC + 6</option>
+        <option value="6:30">UTC + 6:30</option>
+        <option value="7">UTC + 7</option>
+        <option value="8">UTC + 8</option>
+        <option value="8:45">UTC + 8:45</option>
+        <option value="9">UTC + 9</option>
+        <option value="9:30">UTC + 9:30</option>
+        <option value="10">UTC + 10</option>
+        <option value="10:30">UTC + 10:30</option>
+        <option value="11">UTC + 11</option>
+        <option value="12">UTC + 12</option>
+        <option value="12:45">UTC + 12:45</option>
+        <option value="13">UTC + 13</option>
+        <option value="14">UTC + 14</option>
+    </select>
+</form>
+
+<form id="weekSelectorForm" method="GET" action="/usercp">
+    <input type="week" id="weekSelector" name="week" value={{defaultWeek}} onchange="this.form.submit()"/>
+    <input type="button" onclick="resetDate()"value="Today"/>
+</form>
+
+<div class="usercp-center">
+    <form id="priceInputForm" method="POST" action="/usercp">
+        <input type="number" id="buyingPrice"/>
+        <div class="form-row">
+            <h6>Sunday</h6>
+            <div class="input-group">
+                <label for="monAMSellingPrice">What was the price of turnips this week on your island?</label>
+                <input type="number" id="monAMSellingPrice" placeholder="..." name="buyingPrice" {{#if user.buyingPrice}}value={{user.buyingPrice}}{{/if}} onchange="this.form.submit()"/>
+            </div>
+        </div>
+        <div class="form-flex-wrap">
+            <div class="form-row">
+                <h6>Monday</h6>
+                <div class="input-group">
+                    <label for="monAMSellingPrice">AM</label>
+                    <input type="number" id="monAMSellingPrice" placeholder="..." name="monAM" {{#if user.monAM}}value={{user.monAM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+                <div class="input-group">
+                    <label for="monPMSellingPrice">PM</label>
+                    <input type="number" id="monPMSellingPrice" placeholder="..." name="monPM" {{#if user.monPM}}value={{user.monPM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <h6>Tuesday</h6>
+                <div class="input-group">
+                    <label for="tueAMSellingPrice">AM</label>
+                    <input type="number" id="tueAMSellingPrice" placeholder="..." name="tueAM" {{#if user.tueAM}}value={{user.tueAM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+                <div class="input-group">
+                    <label for="tuePMSellingPrice">PM</label>
+                    <input type="number" id="tuePMSellingPrice" placeholder="..." name="tuePM" {{#if user.tuePM}}value={{user.tuePM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <h6>Wednesday</h6>
+                <div class="input-group">
+                    <label for="wedAMSellingPrice">AM</label>
+                    <input type="number" id="wedAMSellingPrice" placeholder="..." name="wedAM" {{#if user.wedAM}}value={{user.wedAM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+                <div class="input-group">
+                    <label for="wedPMSellingPrice">PM</label>
+                    <input type="number" id="wedPMSellingPrice" placeholder="..." name="wedPM" {{#if user.wedPM}}value={{user.wedPM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <h6>Tuesday</h6>
+                <div class="input-group">
+                    <label for="thuAMSellingPrice">AM</label>
+                    <input type="number" id="thuAMSellingPrice" placeholder="..." name="thuAM" {{#if user.thuAM}}value={{user.thuAM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+                <div class="input-group">
+                    <label for="thuPMSellingPrice">PM</label>
+                    <input type="number" id="thuPMSellingPrice" placeholder="..." name="thuPM" {{#if user.thuPM}}value={{user.thuPM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <h6>Friday</h6>
+                <div class="input-group">
+                    <label for="friAMSellingPrice">AM</label>
+                    <input type="number" id="friAMSellingPrice" placeholder="..." name="friAM" {{#if user.friAM}}value={{user.friAM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+                <div class="input-group">
+                    <label for="friPMSellingPrice">PM</label>
+                    <input type="number" id="friPMSellingPrice" placeholder="..." name="friPM" {{#if user.friPM}}value={{user.friPM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <h6>Saturday</h6>
+                <div class="input-group">
+                    <label for="satAMSellingPrice">AM</label>
+                    <input type="number" id="satAMSellingPrice" placeholder="..." name="satAM" {{#if user.satAM}}value={{user.satAM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+                <div class="input-group">
+                    <label for="satPMSellingPrice">PM</label>
+                    <input type="number" id="satPMSellingPrice" placeholder="..." name="satPM" {{#if user.satPM}}value={{user.satPM}}{{/if}} onchange="this.form.submit()"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function resetDate()
+    {
+        const element = document.getElementById("weekSelector");
+        element.value = "{{thisWeek}}";
+        element.form.submit();
+    }
+</script>
