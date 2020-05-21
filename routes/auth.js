@@ -37,9 +37,9 @@ router.post('/register', function(req, res, next)
     }
     else
     {
-        userDb.saveUpdate(
             {userId: req.user.userId},
             {userName: req.body.username})
+        userDb.safeUpdate(
         .then(() =>
         {
             res.redirect('/');

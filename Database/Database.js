@@ -51,7 +51,7 @@ class Database
         });
     }
 
-    saveUpdate(doc, updateDoc)
+    safeUpdate(doc, updateDoc)
     {
         return new Promise((resolve, reject) =>
         {
