@@ -1,14 +1,24 @@
 {
-  "name": "oauthtest",
-  "version": "1.0.0",
-  "description": "",
+  "name": "turnip-mafia",
+  "version": "0.0.1",
+  "description": "This is the database version of the turnip mafia sheet",
+  "keywords": [],
+  "homepage": "https://github.com/tigerplush/turnip-mafia",
+  "bugs": {
+    "url": "https://github.com/tigerplush/turnip-mafia/issues",
+    "email": "christopher.putz@corgibase.de"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "author": "",
+  "author": "Christopher 'Tiger' Putz",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tigerplush/turnip-mafia.git"
+  },
   "dependencies": {
     "chart.js": "^2.9.3",
     "dotenv": "^8.2.0",
@@ -21,5 +31,6 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7"
-  }
+  },
+  "devDependencies": {}
 }
