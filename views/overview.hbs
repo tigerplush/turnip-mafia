@@ -15,6 +15,9 @@
             <input type="week" id="weekSelector" name="week" value={{defaultWeek}} onchange="this.form.submit()"/>
             <input type="button" onclick="resetDate()"value="Today"/>
         </form>
+        <form id="downloadForm" method="GET" action="/overview/download" target="_blank">
+            <input type="submit" value="Download">
+        </form>
     </div>
 
     <canvas class="overview-canvas-holder" id="overviewChart"></canvas>
