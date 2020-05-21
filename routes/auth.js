@@ -6,16 +6,17 @@ const userDb = require('../Database/user');
 
 router.get('/register', function(req, res, next)
 {
+    const user = req.user;
     if(req.user.loggedIn)
     {
         res.redirect('/');
     }
     else
     {
-        userDb.findOne({userId: req.user.userId})
-        .then(user =>
+        userDb.findOne(user.GoogleId)
+        .then(dbUser =>
             {
-                if(user && user.userName)
+                if(dbUser && dbUser.userName)
                 {
                     res.redirect('/');
                 }
@@ -31,15 +32,17 @@ router.get('/register', function(req, res, next)
 
 router.post('/register', function(req, res, next)
 {
+    const user = req.user;
     if(!req.body.username)
     {
         res.redirect('/auth/register-cancel');
     }
     else
     {
-            {userId: req.user.userId},
-            {userName: req.body.username})
+        user.UserName = req.body.username;
         userDb.safeUpdate(
+            req.user.GoogleId,
+            user)
         .then(() =>
         {
             res.redirect('/');
@@ -54,7 +57,8 @@ router.post('/register', function(req, res, next)
 
 router.post('/register-cancel', function(req, res, next)
 {
-    userDb.remove({userId: req.user.userId})
+    const user = req.user;
+    userDb.remove(user.GoogleId)
     .catch(err => console.log(err));
     req.session.destroy();
     res.redirect('/');

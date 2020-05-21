@@ -1,11 +1,11 @@
 <div class="data-entry-block">
     <h6>{{weekday}}</h6>
     <div class="data-entry-group">
-        <label for="AMSellingPrice">AM</label>
-        <input type="number" id="AMSellingPrice" placeholder="..." name="sellingPrices" {{#if amPrice}}value={{amPrice}}{{/if}} onchange="this.form.submit()"/>
+        <label for="AMSellingPrice{{@index}}">AM</label>
+        <input type="number" id="AMSellingPrice{{@index}}" placeholder="..." name="sellingPrices" value="{{amPrice}}"/>
     </div>
     <div class="data-entry-group">
-        <label for="PMSellingPrice">PM</label>
-        <input type="number" id="PMSellingPrice" placeholder="..." name="sellingPrices" {{#if pmPrice}}value={{pmPrice}}{{/if}} onchange="this.form.submit()"/>
+        <label for="PMSellingPrice{{@index}}">PM</label>
+        <input type="number" id="PMSellingPrice{{@index}}" placeholder="..." name="sellingPrices" value="{{pmPrice}}"/>
     </div>
 </div>

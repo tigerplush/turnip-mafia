@@ -41,12 +41,19 @@ router.get('/', function(req, res, next)
     .then(docs =>
         {
             turnips = docs;
-            const userPromises = docs.map(doc => userDb.find({userid: turnips.userId}));
+            const userPromises = docs.map(doc => userDb.findOne({googleId: doc.googleId}));
             return Promise.all(userPromises);
         })
     .then(users =>
         {
-            //console.log(users);
+            turnips.forEach(turnip =>
+                {
+                    let i = users.findIndex(user => user.googleId === turnip.googleId);
+                    if(i >= 0)
+                    {
+                        turnip.userName = users[i].userName;
+                    }
+                });
         })
     .catch(err => console.log(err))
     .finally(() =>

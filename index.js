@@ -14,6 +14,8 @@ const overviewRouter = require('./routes/overview');
 const usercpRouter = require('./routes/usercp');
 const authRouter = require('./routes/auth');
 
+const User = require('./User');
+
 const app = express();
 
 app.use(lessMiddleware('/less', {
@@ -39,21 +41,22 @@ passport.use(new GoogleStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
         const userInfo = profile._json;
-        userDb.findOne({userId: userInfo.sub})
+        let user = new User(userInfo.sub);
+        userDb.findOne(user.GoogleId)
         .then(doc =>
             {
                 if(doc)
                 {
-                    done(null, doc);
+                    user = new User().FromObject(doc);
+                    done(null, user);
                 }
                 else
                 {
-                    return userDb.insert({userId: userInfo.sub})
+                    return userDb.insert(user.ToObject())
                     .then(newDoc =>
                         {
-                            done(null, newDoc);
-                        })
-                    .catch(err => done(err, null));
+                            done(null, user);
+                        });
                 }
             })
         .catch(err => done(err, null));
@@ -63,12 +66,13 @@ passport.use(new GoogleStrategy({
 
 // Used to stuff a piece of information into a cookie
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user.ToObject());
 });
 
 // Used to decode the received cookie and persist session
 passport.deserializeUser((user, done) => {
-    done(null, user);
+    var userClass = new User().FromObject(user);
+    done(null, userClass);
 });
 
 app.use(function (req, res, next) {

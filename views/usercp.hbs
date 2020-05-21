@@ -42,16 +42,18 @@
 
 <div class="usercp-center">
     <form id="weekSelectorForm" method="GET" action="/usercp">
-        <input type="week" id="weekSelector" name="week" value={{defaultWeek}} onchange="this.form.submit()"/>
+        <input type="week" id="weekSelector" name="week" value="{{defaultWeek}}" onchange="this.form.submit()"/>
         <input type="button" onclick="resetDate()"value="Today"/>
     </form>
 
-    <form id="priceInputForm" method="POST" action="/usercp">
+    <form id="priceInputForm" method="POST" action="">
+    <!--<form id="priceInputForm" method="POST" action="/usercp">-->
         <div class="form-row">
             <h6>Sunday</h6>
             <div class="data-entry-group">
-                <label for="monAMSellingPrice">What was the price of turnips this week on your island?</label>
-                <input type="number" id="monAMSellingPrice" placeholder="..." name="buyingPrice" {{#if userInfo.buyingPrice}}value={{userInfo.buyingPrice}}{{/if}} onchange="this.form.submit()"/>
+                <label for="sunBuyingPrice">What was the price of turnips this week on your island?</label>
+                <input type="number" id="sunBuyingPrice" placeholder="..." name="buyingPrice" value="{{userInfo.buyingPrice}}" />
+                <!--<input type="number" id="monAMSellingPrice" placeholder="..." name="buyingPrice" {{#if userInfo.buyingPrice}}value={{userInfo.buyingPrice}}{{/if}} onchange="this.form.submit()"/>-->
             </div>
         </div>
         <div class="form-flex-wrap">
@@ -69,4 +71,36 @@
         element.value = "{{thisWeek}}";
         element.form.submit();
     }
+</script>
+
+<script type="text/javascript">
+    const getSellFields = function()
+    {
+        let fields = [];
+        for(var i = 0; i < 6; i++)
+        {
+            fields.push($('#AMSellingPrice' + i)[0]);
+            fields.push($('#PMSellingPrice' + i)[0]);
+        }
+        return fields;
+    }
+
+    $(document).ready(function()
+    {
+        $(document).on('change', '#priceInputForm', function()
+        {
+            var week = {};
+            week.firstTimeBuy = false;
+            week.buyingPrice = $('#sunBuyingPrice').val();
+            week.buyingAmount = "";
+            week.sellingPrices = getSellFields().map(function(input)
+            {
+                return parseInt(input.value || '');
+            });
+            week.previousPattern = "";
+            week.patterns = [];
+            $.post("/usercp", week);
+            return false;
+        });
+    });
 </script>
