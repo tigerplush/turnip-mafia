@@ -11,7 +11,7 @@ function User(
     )
 {
     this.googleId = googleId;
-    this.userName = userName;
+    this.userName = userName || "";
     this.twitterHandle = twitterHandle || "";
     this.discordTag = discordTag || "";
     this.timezone = timezone || "";

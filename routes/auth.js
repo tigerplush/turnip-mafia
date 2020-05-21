@@ -32,7 +32,7 @@ router.get('/register', function(req, res, next)
 
 router.post('/register', function(req, res, next)
 {
-    const user = req.user;
+    let user = req.user;
     if(!req.body.username)
     {
         res.redirect('/auth/register-cancel');
@@ -41,7 +41,7 @@ router.post('/register', function(req, res, next)
     {
         user.UserName = req.body.username;
         userDb.safeUpdate(
-            req.user.GoogleId,
+            user.GoogleId,
             user)
         .then(() =>
         {

@@ -34,6 +34,15 @@ app.use(session(
 app.use(passport.initialize()); // Used to initialize passport
 app.use(passport.session()); // Used to persist login sessions
 
+/**
+ * pass through session and user information
+ */
+app.use(function (req, res, next) {
+    res.locals.session = req.session;
+    res.locals.user = req.user;
+    next();
+});
+
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -71,14 +80,13 @@ passport.serializeUser((user, done) => {
 
 // Used to decode the received cookie and persist session
 passport.deserializeUser((user, done) => {
-    var userClass = new User().FromObject(user);
-    done(null, userClass);
-});
-
-app.use(function (req, res, next) {
-    res.locals.session = req.session;
-    res.locals.user = req.user;
-    next();
+    userDb.findOne({googleId: user.googleId})
+    .then(userDbEntry =>
+        {
+            var userClass = new User().FromObject(userDbEntry);
+            done(null, userClass);
+        })
+    .catch(err => done(err, null));
 });
 
 const handlebars = hbs.create({

@@ -7,7 +7,9 @@
   {{/if}}
   {{#if user}}
   <li class="header-login-field"><a href="/logout">Logout</a></li>
-  <li class="header-login-field"><label>Logged in as<br>{{user.userName}}</label></li>
+    {{#if user.userName}}
+    <li class="header-login-field"><label>Logged in as<br>{{user.userName}}</label></li>
+    {{/if}}
   {{else}}
   <li class="header-login-field"><a href="/auth/google">Login</a></li>
   {{/if}}
