@@ -1,44 +1,128 @@
-<form id="userInfo" method="POST" action="/usercp">
-    <select id = "timezoneList">
-        <option value="-12">UTC - 12</option>
-        <option value="-11">UTC - 11</option>
-        <option value="-10">UTC - 10</option>
-        <option value="-9:30">UTC - 9:30</option>
-        <option value="-9">UTC - 9</option>
-        <option value="-8">UTC - 8</option>
-        <option value="-7">UTC - 7</option>
-        <option value="-6">UTC - 6</option>
-        <option value="-5">UTC - 5</option>
-        <option value="-4">UTC - 4</option>
-        <option value="-3">UTC - 3</option>
-        <option value="-2:30">UTC - 2:30</option>
-        <option value="-2">UTC - 2</option>
-        <option value="-1">UTC - 1</option>
-        <option selected value="0">UTC</option>
-        <option value="1">UTC + 1</option>
-        <option value="2">UTC + 2</option>
-        <option value="3">UTC + 3</option>
-        <option value="4">UTC + 4</option>
-        <option value="4:30">UTC + 4:30</option>
-        <option value="5">UTC + 5</option>
-        <option value="5:30">UTC + 5:30</option>
-        <option value="5:45">UTC + 5:45</option>
-        <option value="6">UTC + 6</option>
-        <option value="6:30">UTC + 6:30</option>
-        <option value="7">UTC + 7</option>
-        <option value="8">UTC + 8</option>
-        <option value="8:45">UTC + 8:45</option>
-        <option value="9">UTC + 9</option>
-        <option value="9:30">UTC + 9:30</option>
-        <option value="10">UTC + 10</option>
-        <option value="10:30">UTC + 10:30</option>
-        <option value="11">UTC + 11</option>
-        <option value="12">UTC + 12</option>
-        <option value="12:45">UTC + 12:45</option>
-        <option value="13">UTC + 13</option>
-        <option value="14">UTC + 14</option>
-    </select>
-</form>
+
+<div align="center" style="font-weight: bold;margin: 5px;">
+    <a href="/user/{{user.id}}">Permalink to your profile</a>
+</div>
+<div class="usercp">
+    <div class="usercp-userinfo">
+        <div class="usercp-userinfo-column">
+            <div class="usercp-userinfo-row">
+                {{#if user.avatar}}
+                <img src="/avatars/{{user.avatar}}">
+                {{/if}}
+            </div>
+            <div class="usercp-userinfo-row">
+                <form action="/usercp/uploadAvatar" method="POST" enctype="multipart/form-data">
+                    <div>
+                        <input type="file" accept="image/jpeg" name="avatar" >
+                    </div>
+                    <div>
+                        <input type="submit" value="upload">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="usercp-userinfo-column">
+            <form id="userInfo" method="POST" action="">
+                <h4>{{user.userName}}</h4>
+
+                <div class="usercp-userinfo-row">
+                    <label>Timezone</label>
+                    <select id="timezoneList">
+                        {{#each timezones}}
+                            <option value="{{timezone}}" {{selected}}>UTC {{timezone}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="usercp-userinfo-row">
+                    <label>Twitter:</label>
+                    <div>
+                        <label>@</label>
+                        <input type="text" value="{{user.twitterHandle}}" id="twitterHandle" size="15" maxlength="15">
+                    </div>
+                </div>
+
+                <div class="usercp-userinfo-row">
+                    <label>Discord: </label>
+                    <input type="text" value="{{user.discordTag}}" id="discordTag">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="usercp-ingame">
+        <div class="usercp-ingame-column">
+            <form id="ingameInfo" action="" method="POST">
+                <div class="usercp-ingame-row">
+                    <label>Ingame Name</label>
+                    <input type="text" value="{{user.ingameName}}" id="ingameName" size="10" maxlength="10">
+                </div>
+                <div class="usercp-ingame-row">
+                    <label>Ingame Title</label>
+                    <input type="text" value="{{user.title}}" id="ingameTitle" >
+                </div>
+                <div class="usercp-ingame-row">
+                    <label>Island Name</label>
+                    <input type="text" value="{{user.islandName}}" id="islandName" size="10" maxlength="10">
+                </div>
+                <div class="usercp-ingame-row">
+                    <label>Friendcode</label>
+                    <div>
+                        <label>SW-</label>
+                        <input type="text" value="{{user.friendcode}}" id="friendcode" size="14" maxlength="14">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="usercp-ingame-column">
+            <div class="usercp-ingame-row">
+                {{#if user.map}}
+                    <img src="/maps/{{user.map}}">
+                {{/if}}
+            </div>
+            <div class="usercp-ingame-row">
+                <form action="/usercp/uploadMap" method="POST" enctype="multipart/form-data">
+                    <div>
+                        <input type="file" accept="image/jpeg" name="map" >
+                    </div>
+                    <div>
+                        <input type="submit" value="upload">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $(document).on('change', '#userInfo', function()
+        {
+            var userInfo = {};
+            userInfo.timezone = $('#timezoneList').val();
+            userInfo.twitterHandle = $('#twitterHandle').val();
+            userInfo.discordTag = $('#discordTag').val();
+            $.post("/usercp/userinfo", userInfo);
+            return false;
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $(document).on('change', '#ingameInfo', function()
+        {
+            var islandInfo = {};
+            islandInfo.ingameName = $('#ingameName').val();
+            islandInfo.ingameTitle = $('#ingameTitle').val();
+            islandInfo.islandName = $('#islandName').val();
+            islandInfo.friendcode = $('#friendcode').val();
+            $.post("/usercp/islandinfo", islandInfo);
+            return false;
+        });
+    });
+</script>
 
 <div class="usercp-center">
     <form id="weekSelectorForm" method="GET" action="/usercp">
@@ -99,7 +183,7 @@
             });
             week.previousPattern = "";
             week.patterns = [];
-            $.post("/usercp", week);
+            $.post("/usercp/turnip", week);
             return false;
         });
     });

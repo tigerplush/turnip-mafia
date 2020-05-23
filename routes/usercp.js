@@ -5,6 +5,31 @@ const moment = require('moment');
 
 const Week = require('../Week');
 
+const multer = require('multer');
+
+const timezones = require('../timezones');
+
+const avatarStorage = multer.diskStorage({
+    destination: 'public/avatars',
+    filename: function(req, file, cb)
+    {
+        cb(null, `${req.user.id}.jpg`);
+    }
+});
+
+const mapStorage = multer.diskStorage({
+    destination: 'public/maps',
+    filename: function(req, file, cb)
+    {
+        cb(null, `${req.user.id}.jpg`);
+    }
+});
+
+const uploadAvatar = multer({storage: avatarStorage});
+const uploadMap = multer({storage: mapStorage});
+
+const userInfos = require('../Database/user');
+
 const turnipPrices = require('../Database/turnip-prices');
 
 router.get('/', function(req, res, next)
@@ -59,6 +84,16 @@ router.get('/', function(req, res, next)
                 }
             }
 
+            const timezoneObjects = timezones.map(timezone =>
+                {
+                    let selected = "";
+                    if(req.user.timezone && req.user.timezone === timezone)
+                    {
+                        selected = "selected";
+                    }
+                    return {timezone: timezone, selected: selected}
+                })
+
             res.render('usercp.hbs',
             {
                 usercp: true,
@@ -67,13 +102,47 @@ router.get('/', function(req, res, next)
                 user: user,
                 userInfo: week.ToObject(),
                 week: weekArray,
+                timezones: timezoneObjects
             });
         });
     }
 });
 
-router.post('/', function(req, res, next)
+router.post('/userinfo', function(req, res, next)
 {
+    const user = req.user;
+    if(req.body.timezone > 0)
+    {
+        user.timezone = `+${req.body.timezone}`;
+    }
+    user.timezone = req.body.timezone;
+    user.twitterHandle = req.body.twitterHandle;
+    user.discordTag = req.body.discordTag;
+
+    userInfos.update(
+        user.GoogleId,
+        user.ToObject())
+    .catch(err => console.log(err))
+    .finally(() => res.redirect('/usercp'));
+});
+
+router.post('/islandinfo', function(req, res, next)
+{
+    const user = req.user;
+    user.ingameName = req.body.ingameName;
+    user.ingameTitle = req.body.ingameTitle;
+    user.islandName = req.body.islandName;
+    user.friendcode = req.body.friendcode;
+    userInfos.update(
+        user.GoogleId,
+        user.ToObject())
+    .catch(err => console.log(err))
+    .finally(() => res.redirect('/usercp'));
+});
+
+router.post('/turnip', function(req, res, next)
+{
+    console.log(req.body);
     const user = req.user;
 
     const week = new Week(
@@ -91,5 +160,34 @@ router.post('/', function(req, res, next)
     .catch(err => console.log(err))
     .finally(res.redirect('/usercp'));
 })
+
+
+router.post('/uploadAvatar', uploadAvatar.single('avatar'),
+function(req, res)
+{
+    const user = req.user;
+    filename = req.file.filename;
+    user.avatar = filename;
+    userInfos.update(
+        user.GoogleId,
+        user.ToObject())
+    .catch(err => console.log(err))
+    .finally(() => res.redirect('/usercp'));
+});
+
+
+router.post('/uploadMap', uploadMap.single('map'),
+function(req, res)
+{
+    const user = req.user;
+    filename = req.file.filename;
+    user.map = filename;
+    userInfos.update(
+        user.GoogleId,
+        user.ToObject())
+    .catch(err => console.log(err))
+    .finally(() => res.redirect('/usercp'));
+});
+
 
 module.exports = router;

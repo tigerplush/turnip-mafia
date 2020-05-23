@@ -13,6 +13,7 @@ const userDb = require('./Database/user');
 const overviewRouter = require('./routes/overview');
 const usercpRouter = require('./routes/usercp');
 const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
 
 const User = require('./User');
 
@@ -122,6 +123,8 @@ app.get('/openIslands', function(req, res, next)
 });
 
 app.use('/usercp', usercpRouter);
+
+app.use('/user', userRouter);
 
 app.get('/login', function(req, res, next)
 {

@@ -1,0 +1,77 @@
+<div class="user">
+    <div class="user-row">
+        <div class="user-col">
+            {{#if avatar}}
+                <img src="/avatars/{{avatar}}">
+            {{/if}}
+        </div>
+        <div class="user-col">
+            <div class="user-information">
+
+                <h4>{{userName}}</h4>
+                {{#if timezone}}
+                    <label>UTC {{timezone}}</label>
+                {{/if}}
+                {{#if twitterHandle}}
+                    <a href="https://twitter.com/{{twitterHandle}}?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @{{twitterHandle}}</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                {{/if}}
+                {{#if discordTag}}
+                <div class="user-contact discord">
+                    <img src="/images/Discord-Logo-Color.png">
+                    <label>{{discordTag}}</label>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="user-row">
+        <div class="user-col">
+            <div class="user-information">
+                {{#if ingameName}}
+                    <h4>{{ingameName}}</h4>
+                {{/if}}
+                {{#if title}}
+                    <h5>{{title}}</h5>
+                {{/if}}
+                {{#if islandName}}
+                    <label>{{islandName}}</label>
+                {{/if}}
+                {{#if friendcode}}
+                    <label>SW-{{friendcode}}</label>
+                {{/if}}
+            </div>
+        </div>
+        <div class="user-col">
+            {{#if map}}
+                <img src="/maps/{{map}}">
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="user">
+    <div class="user-base">
+        <div class="user-col">
+            <img src="{{user.userAvatar}}" alt="{{user.userName}}">
+        </div>
+        <div class="user-col">
+            <div class="user-information">
+                <h4 class="user-name">{{user.userName}}</h4>
+                <a href="https://twitter.com/{{user.twitterHandle}}">@{{user.twitterHandle}}</a>
+                <label>{{user.discordTag}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="user-ingame">
+        <div class="user-ingame-information">
+            <label>Ingame Name</label>
+            <label>Title</label>
+            <label>Island Name</label>
+            <label>Friend code</label>
+        </div>
+        <div class="user-map">
+            <img src="{{user.userAvatar}}" alt="Island Map">
+        </div>
+    </div>
+</div>-->
